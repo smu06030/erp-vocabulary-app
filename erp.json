@@ -1,0 +1,538 @@
+[
+  {
+    "id": 1,
+    "abbr": "ERP",
+    "fullname": "Enterprise Resource Planning",
+    "description": "기업의 자원(인사, 회계, 생산, 구매 등)을 통합 관리하는 전사 시스템"
+  },
+  {
+    "id": 2,
+    "abbr": "MES",
+    "fullname": "Manufacturing Execution System",
+    "description": "생산 현장의 실시간 작업, 설비, 품질 등을 관리하는 제조 실행 시스템"
+  },
+  {
+    "id": 3,
+    "abbr": "WMS",
+    "fullname": "Warehouse Management System",
+    "description": "창고 입출고, 재고, 위치관리 등 물류창고 관리 시스템"
+  },
+  {
+    "id": 4,
+    "abbr": "RWS",
+    "fullname": "Raw Material Weighing System",
+    "description": "원료 칭량관리 시스템"
+  },
+  {
+    "id": 5,
+    "abbr": "MTS",
+    "fullname": "Manufacturing Tracking System",
+    "description": "제조 이력 및 투입관리 시스템"
+  },
+  {
+    "id": 6,
+    "abbr": "SCM",
+    "fullname": "Supply Chain Management",
+    "description": "공급망 전체(공급-생산-물류-판매) 프로세스를 최적화하는 시스템"
+  },
+  {
+    "id": 7,
+    "abbr": "LMS",
+    "fullname": "Learning Management System",
+    "description": "교육 과정, 학습이력, 평가 등을 관리하는 학습관리시스템"
+  },
+  {
+    "id": 8,
+    "abbr": "EIS",
+    "fullname": "Executive Information System",
+    "description": "경영관리시스템 - 의사결정 지원시스템"
+  },
+  {
+    "id": 9,
+    "abbr": "NPDS",
+    "fullname": "New Product Development System",
+    "description": "신제품 개발 시스템으로, 제품 개발 프로세스를 관리하는 시스템."
+  },
+  {
+    "id": 10,
+    "abbr": "RPA",
+    "fullname": "Robotic Process Automation",
+    "description": "로봇 프로세스 자동화 시스템"
+  },
+  {
+    "id": 11,
+    "abbr": "PLM",
+    "fullname": "Product Lifecycle Management",
+    "description": "제품의 설계부터 폐기까지 전 과정을 관리하는 시스템"
+  },
+  {
+    "id": 12,
+    "abbr": "CRM",
+    "fullname": "Customer Relationship Management",
+    "description": "고객정보, 영업활동, 마케팅 관리 시스템"
+  },
+  {
+    "id": 13,
+    "abbr": "PMS",
+    "fullname": "Project Management System",
+    "description": "프로젝트 일정, 인력, 예산, 진행현황 관리"
+  },
+  {
+    "id": 14,
+    "abbr": "EMS",
+    "fullname": "Equipment Management System",
+    "description": "설비 이력, 점검, 유지보수 관리 시스템"
+  },
+  {
+    "id": 15,
+    "abbr": "QMS",
+    "fullname": "Quality Management System",
+    "description": "품질 검사 및 이력 관리 시스템"
+  },
+  {
+    "id": 16,
+    "abbr": "GW",
+    "fullname": "Groupware",
+    "description": "일정, 결재, 커뮤니케이션 등 그룹 협업 시스템"
+  },
+  {
+    "id": 17,
+    "abbr": "DB",
+    "fullname": "Database",
+    "description": "데이터를 구조화하여 저장하는 공간"
+  },
+  {
+    "id": 18,
+    "abbr": "DBMS",
+    "fullname": "Database Management System",
+    "description": "데이터베이스 관리 소프트웨어 (예: MSSQL, Oracle)"
+  },
+  {
+    "id": 19,
+    "abbr": "RDBMS",
+    "fullname": "Relational Database Management System",
+    "description": "관계형 DB 관리 시스템 (테이블 기반)"
+  },
+  {
+    "id": 20,
+    "abbr": "SQL",
+    "fullname": "Structured Query Language",
+    "description": "데이터 정의·조작·조회 언어"
+  },
+  {
+    "id": 21,
+    "abbr": "DDL",
+    "fullname": "Data Definition Language",
+    "description": "데이터베이스 객체 정의 (CREATE, ALTER, DROP)"
+  },
+  {
+    "id": 22,
+    "abbr": "DML",
+    "fullname": "Data Manipulation Language",
+    "description": "데이터 조작 (SELECT, INSERT, UPDATE, DELETE)"
+  },
+  {
+    "id": 23,
+    "abbr": "PK",
+    "fullname": "Primary Key",
+    "description": "테이블의 기본키, 중복 불가"
+  },
+  {
+    "id": 24,
+    "abbr": "FK",
+    "fullname": "Foreign Key",
+    "description": "다른 테이블 참조키, 참조 무결성 보장"
+  },
+  { "id": 25, "abbr": "IDK", "fullname": "Index", "description": "인덱스" },
+  {
+    "id": 26,
+    "abbr": "API",
+    "fullname": "Application Programming Interface",
+    "description": "프로그램 간 기능/데이터 연동 인터페이스"
+  },
+  {
+    "id": 27,
+    "abbr": "SDK",
+    "fullname": "Software Development Kit",
+    "description": "개발 도구, 라이브러리, 문서 포함 패키지"
+  },
+  {
+    "id": 28,
+    "abbr": "IDE",
+    "fullname": "Integrated Development Environment",
+    "description": "통합 개발 환경 (코드 작성, 디버깅, 빌드)"
+  },
+  {
+    "id": 29,
+    "abbr": "CRUD",
+    "fullname": "Create, Read, Update, Delete",
+    "description": "데이터 기본 처리 동작"
+  },
+  {
+    "id": 30,
+    "abbr": "JSON",
+    "fullname": "JavaScript Object Notation",
+    "description": "데이터 교환 포맷"
+  },
+  {
+    "id": 31,
+    "abbr": "XML",
+    "fullname": "eXtensible Markup Language",
+    "description": "계층형 데이터 구조 언어"
+  },
+  {
+    "id": 32,
+    "abbr": "GUI",
+    "fullname": "Graphical User Interface",
+    "description": "그래픽 기반 인터페이스"
+  },
+  {
+    "id": 33,
+    "abbr": "HTTPS",
+    "fullname": "HyperText Transfer Protocol Secure",
+    "description": "보안 HTTP 통신 프로토콜"
+  },
+  {
+    "id": 34,
+    "abbr": "AP",
+    "fullname": "Accounts Payable",
+    "description": "매입채무"
+  },
+  {
+    "id": 35,
+    "abbr": "AR",
+    "fullname": "Accounts Receivable",
+    "description": "매출채권"
+  },
+  {
+    "id": 36,
+    "abbr": "GL",
+    "fullname": "General Ledger",
+    "description": "총계정원장"
+  },
+  {
+    "id": 37,
+    "abbr": "QA",
+    "fullname": "Quality Assurance",
+    "description": "품질보증"
+  },
+  {
+    "id": 38,
+    "abbr": "QC",
+    "fullname": "Quality Control",
+    "description": "품질관리"
+  },
+  {
+    "id": 39,
+    "abbr": "SD",
+    "fullname": "Sales and Distribution",
+    "description": "판매관리"
+  },
+  {
+    "id": 40,
+    "abbr": "MM",
+    "fullname": "Materials Management",
+    "description": "자재구매관리"
+  },
+  {
+    "id": 41,
+    "abbr": "PP",
+    "fullname": "Production Planning",
+    "description": "생산관리"
+  },
+  {
+    "id": 42,
+    "abbr": "PM",
+    "fullname": "Plant Maintenance",
+    "description": "공정관리"
+  },
+  {
+    "id": 43,
+    "abbr": "FI",
+    "fullname": "Financial Accounting",
+    "description": "회계관리"
+  },
+  {
+    "id": 44,
+    "abbr": "CO",
+    "fullname": "Controlling",
+    "description": "원가관리"
+  },
+  {
+    "id": 45,
+    "abbr": "CS",
+    "fullname": "Customer Service",
+    "description": "고객서비스"
+  },
+  {
+    "id": 46,
+    "abbr": "HR",
+    "fullname": "Human Resources",
+    "description": "인사관리"
+  },
+  {
+    "id": 47,
+    "abbr": "BOM",
+    "fullname": "Bill of Materials",
+    "description": "자재 명세서, 제품 구성 내역"
+  },
+  {
+    "id": 48,
+    "abbr": "MRP",
+    "fullname": "Material Requirements Planning",
+    "description": "자재 소요량 계획"
+  },
+  {
+    "id": 49,
+    "abbr": "MPS",
+    "fullname": "Master Production Schedule",
+    "description": "완제품 생산 계획 일정"
+  },
+  {
+    "id": 50,
+    "abbr": "MTO",
+    "fullname": "Make To Order",
+    "description": "주문 생산 방식"
+  },
+  {
+    "id": 51,
+    "abbr": "MTS",
+    "fullname": "Make To Stock",
+    "description": "재고 생산 방식"
+  },
+  {
+    "id": 52,
+    "abbr": "LT",
+    "fullname": "Lead Time",
+    "description": "부품 조달/생산 소요 기간"
+  },
+  {
+    "id": 53,
+    "abbr": "PR",
+    "fullname": "Purchase Requisition",
+    "description": "구매요청"
+  },
+  {
+    "id": 54,
+    "abbr": "PO",
+    "fullname": "Purchase Order",
+    "description": "구매주문"
+  },
+  {
+    "id": 55,
+    "abbr": "FIFO",
+    "fullname": "First In First Out",
+    "description": "선입선출"
+  },
+  {
+    "id": 56,
+    "abbr": "CAPA",
+    "fullname": "Corrective and Preventive Action",
+    "description": "생산 가능 능력"
+  },
+  {
+    "id": 57,
+    "abbr": "KPI",
+    "fullname": "Key Performance Indicator",
+    "description": "핵심성과지표"
+  },
+  {
+    "id": 58,
+    "abbr": "MOQ",
+    "fullname": "Minimum Order Quantity",
+    "description": "최수주문수량"
+  },
+  {
+    "id": 59,
+    "abbr": "SS",
+    "fullname": "Safety Stock",
+    "description": "안전재고"
+  },
+  { "id": 60, "abbr": "RM", "fullname": "Raw Material", "description": "원료" },
+  {
+    "id": 61,
+    "abbr": "PM",
+    "fullname": "Packing Material",
+    "description": "부자재"
+  },
+  {
+    "id": 62,
+    "abbr": "FG",
+    "fullname": "Finished Goods",
+    "description": "완제품"
+  },
+  {
+    "id": 63,
+    "abbr": "WIP",
+    "fullname": "Work In Progress",
+    "description": "공정중 재고"
+  },
+  {
+    "id": 64,
+    "abbr": "MBO",
+    "fullname": "Management by Objectives",
+    "description": "목표관리"
+  },
+  {
+    "id": 65,
+    "abbr": "B/L",
+    "fullname": "Bill of Lading",
+    "description": "화물 운송 증빙서류"
+  },
+  {
+    "id": 66,
+    "abbr": "HS Code",
+    "fullname": "Harmonized System Code",
+    "description": "국제 통일 상품 분류 코드"
+  },
+  {
+    "id": 67,
+    "abbr": "ETA",
+    "fullname": "Estimated Time of Arrival",
+    "description": "도착 예정 시간"
+  },
+  {
+    "id": 68,
+    "abbr": "ETD",
+    "fullname": "Estimated Time of Departure",
+    "description": "출발 예정 시간"
+  },
+  {
+    "id": 69,
+    "abbr": "FOB",
+    "fullname": "Free On Board",
+    "description": "선적시 마감"
+  },
+  {
+    "id": 70,
+    "abbr": "CIF",
+    "fullname": "Cost, Insurance, Freight",
+    "description": "운임등 모든 비용에 대한 부담을 매도인이 처리하는 조건"
+  },
+  {
+    "id": 71,
+    "abbr": "EXW",
+    "fullname": "Ex Works",
+    "description": "물건 출고 기준 마감"
+  },
+  {
+    "id": 72,
+    "abbr": "DDP",
+    "fullname": "Delivered Duty Paid",
+    "description": "물건 도착 기준 마감"
+  },
+  {
+    "id": 73,
+    "abbr": "SO",
+    "fullname": "Sales Order",
+    "description": "고객 수주"
+  },
+  {
+    "id": 74,
+    "abbr": "GR",
+    "fullname": "Goods Receipt",
+    "description": "입고전표 등록"
+  },
+  {
+    "id": 75,
+    "abbr": "GI",
+    "fullname": "Goods Issue",
+    "description": "출고전표 등록"
+  },
+  {
+    "id": 76,
+    "abbr": "FA",
+    "fullname": "Fixed Asset",
+    "description": "고정자산"
+  },
+  {
+    "id": 77,
+    "abbr": "SOP",
+    "fullname": "Standard Operating Procedure",
+    "description": "표준작업절차"
+  },
+  {
+    "id": 78,
+    "abbr": "COA",
+    "fullname": "Certificate of Analysis",
+    "description": "성적서"
+  },
+  {
+    "id": 79,
+    "abbr": "MSDS",
+    "fullname": "Material Safety Data Sheet",
+    "description": "품질관리 문서"
+  },
+  {
+    "id": 80,
+    "abbr": "ICID",
+    "fullname": "International Cosmetic Ingredient Dictionary",
+    "description": "화장품 성분코드"
+  },
+  {
+    "id": 81,
+    "abbr": "CAS No",
+    "fullname": "Chemical Abstracts Service Number",
+    "description": "화학물질 고유 식별 번호"
+  },
+  {
+    "id": 82,
+    "abbr": "EC No",
+    "fullname": "European Community Number",
+    "description": "유럽기준 화학물질 식별번호"
+  },
+  {
+    "id": 83,
+    "abbr": "INCI",
+    "fullname": "International Nomenclature of Cosmetic Ingredients",
+    "description": "화장품 표준명칭"
+  },
+  {
+    "id": 84,
+    "abbr": "CGMP",
+    "fullname": "Current Good Manufacturing Practice",
+    "description": "화장품제조 관리 기준"
+  },
+  {
+    "id": 85,
+    "abbr": "CSV",
+    "fullname": "Computer System Validation",
+    "description": "전산시스템에 대해 프로그램을 검증하는 활동"
+  },
+  {
+    "id": 86,
+    "abbr": "JIT",
+    "fullname": "Just-In-Time",
+    "description": "필요한 물품을 필요한 때에 필요한 만큼만 생산하거나 조달하여 재고를 최소화하는 생산 방식."
+  },
+  {
+    "id": 87,
+    "abbr": "TQM",
+    "fullname": "Total Quality Management",
+    "description": "전사적 품질 경영, 조직 전체가 고객 만족을 목표로 지속적인 품질 개선에 참여하는 경영 철학."
+  },
+  {
+    "id": 88,
+    "abbr": "BEP",
+    "fullname": "Break-Even Point",
+    "description": "손익분기점"
+  },
+  {
+    "id": 89,
+    "abbr": "POP",
+    "fullname": "Point of Production",
+    "description": "실적 입력하여 공정 상황을 확인하는 시스템."
+  },
+  {
+    "id": 90,
+    "abbr": "PDA",
+    "fullname": "Personal Digital Assistant",
+    "description": "휴대용 단말기"
+  },
+  {
+    "id": 91,
+    "abbr": "BPR",
+    "fullname": "Business Process Reengineering",
+    "description": "원가, 품질 등을 극적으로 개선하기 위해 기업의 업무 프로세스를 근본적으로 재설계하는 혁신 방법론."
+  }
+]
