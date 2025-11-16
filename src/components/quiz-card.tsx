@@ -20,9 +20,16 @@ interface QuizCardProps {
   mode: "random" | "selected";
   onNext?: () => void;
   onBackToList?: () => void;
+  progress?: string;
 }
 
-export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
+export function QuizCard({
+  item,
+  mode,
+  onNext,
+  onBackToList,
+  progress,
+}: QuizCardProps) {
   const [userAnswer, setUserAnswer] = useState<QuizAnswer>({
     fullname: "",
     description: "",
@@ -91,6 +98,11 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
 
       <CardContent className="space-y-6 sm:space-y-8 p-4 sm:p-6 md:p-8">
         <div className="text-center space-y-3">
+          {progress && (
+            <div className="text-sm sm:text-base font-semibold text-blue-600 bg-blue-50 px-4 py-2 rounded-full">
+              진행: {progress}
+            </div>
+          )}
           <p className="text-xs sm:text-sm text-muted-foreground font-medium">
             문제
           </p>
