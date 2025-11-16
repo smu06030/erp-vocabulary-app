@@ -4,12 +4,14 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Home, BookOpen } from "lucide-react";
+import { Search, Home, BookOpen, PlayCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { VocabularyItem } from "@/types/vocabulary";
 import vocabularyData from "../../../erp.json";
 
 export default function ListPage() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredData = (vocabularyData as VocabularyItem[]).filter((item) => {
@@ -20,6 +22,12 @@ export default function ListPage() {
       item.description.toLowerCase().includes(query)
     );
   });
+
+  const handleSequentialQuiz = () => {
+    const ids = filteredData.map((item) => item.id);
+    sessionStorage.setItem("sequentialQuizIds", JSON.stringify(ids));
+    router.push("/quiz/sequential");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-3 sm:p-4 md:p-6">
@@ -48,18 +56,31 @@ export default function ListPage() {
           </CardHeader>
 
           <CardContent className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
-              <Input
-                type="text"
-                placeholder="약어, 영문, 한글로 검색..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 sm:pl-10 text-base sm:text-lg py-4 sm:py-5 md:py-6 min-h-[48px]"
-              />
+            <div className="space-y-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 sm:w-5 sm:h-5" />
+                <Input
+                  type="text"
+                  placeholder="약어, 영문, 한글로 검색..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 sm:pl-10 text-base sm:text-lg py-4 sm:py-5 md:py-6 min-h-[48px]"
+                />
+              </div>
+
+              {filteredData.length > 0 && (
+                <Button
+                  onClick={handleSequentialQuiz}
+                  className="w-full text-base sm:text-lg py-5 sm:py-6 min-h-[52px] bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 font-semibold"
+                  size="lg"
+                >
+                  <PlayCircle className="w-5 h-5 mr-2" />
+                  순서대로 퀴즈 풀기 ({filteredData.length}개)
+                </Button>
+              )}
             </div>
 
-            <div className="grid gap-2 sm:gap-3 max-h-[calc(100vh-280px)] sm:max-h-[600px] overflow-y-auto pr-1 sm:pr-2">
+            <div className="grid gap-2 sm:gap-3 max-h-[calc(100vh-380px)] sm:max-h-[500px] overflow-y-auto pr-1 sm:pr-2">
               {filteredData.map((item) => (
                 <Link key={item.id} href={`/quiz/${item.id}`}>
                   <Card className="hover:shadow-md transition-all cursor-pointer border-2 hover:border-green-500 active:scale-[0.98]">
