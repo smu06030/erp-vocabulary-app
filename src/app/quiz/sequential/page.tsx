@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { QuizCard } from "@/components/quiz-card";
 import { VocabularyItem } from "@/types/vocabulary";
 import vocabularyData from "../../../../erp.json";
@@ -10,8 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Home, RotateCw, List as ListIcon, Shuffle } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default function SequentialQuizPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [filteredList, setFilteredList] = useState<VocabularyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
