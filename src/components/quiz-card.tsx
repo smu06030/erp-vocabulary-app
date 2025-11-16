@@ -32,7 +32,7 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
     fullnameCorrect: boolean;
     descriptionCorrect: boolean;
   } | null>(null);
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
     const quizResult = checkAnswer(userAnswer, item);
     setResult(quizResult);
     setSubmitted(true);
-    
+
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
