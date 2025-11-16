@@ -1,168 +1,183 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Github, Copy, Sparkles } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import axios from 'axios';
-
-const PACKAGE_NAME = '@easynext/cli';
-const CURRENT_VERSION = 'v0.1.38';
-
-function latestVersion(packageName: string) {
-  return axios
-    .get('https://registry.npmjs.org/' + packageName + '/latest')
-    .then((res) => res.data.version);
-}
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckCircle2, XCircle, ArrowRight } from "lucide-react";
+import { VocabularyItem, QuizAnswer } from "@/types/vocabulary";
+import { getRandomItem, checkAnswer } from "@/lib/quiz";
+import vocabularyData from "../../erp.json";
 
 export default function Home() {
-  const { toast } = useToast();
-  const [latest, setLatest] = useState<string | null>(null);
+  const [currentItem, setCurrentItem] = useState<VocabularyItem>(() =>
+    getRandomItem(vocabularyData as VocabularyItem[])
+  );
+  const [userAnswer, setUserAnswer] = useState<QuizAnswer>({
+    fullname: "",
+    description: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState<{
+    fullnameCorrect: boolean;
+    descriptionCorrect: boolean;
+  } | null>(null);
 
-  useEffect(() => {
-    const fetchLatestVersion = async () => {
-      try {
-        const version = await latestVersion(PACKAGE_NAME);
-        setLatest(`v${version}`);
-      } catch (error) {
-        console.error('Failed to fetch version info:', error);
-      }
-    };
-    fetchLatestVersion();
-  }, []);
-
-  const handleCopyCommand = () => {
-    navigator.clipboard.writeText(`npm install -g ${PACKAGE_NAME}@latest`);
-    toast({
-      description: 'Update command copied to clipboard',
-    });
+  const handleSubmit = () => {
+    const quizResult = checkAnswer(userAnswer, currentItem);
+    setResult(quizResult);
+    setSubmitted(true);
   };
 
-  const needsUpdate = latest && latest !== CURRENT_VERSION;
+  const handleNext = () => {
+    const newItem = getRandomItem(vocabularyData as VocabularyItem[]);
+    setCurrentItem(newItem);
+    setUserAnswer({ fullname: "", description: "" });
+    setSubmitted(false);
+    setResult(null);
+  };
+
+  const isFormValid =
+    userAnswer.fullname.trim() && userAnswer.description.trim();
 
   return (
-    <div className="flex min-h-screen relative overflow-hidden">
-      {/* Main Content */}
-      <div className="min-h-screen flex bg-gray-100">
-        <div className="flex flex-col p-5 md:p-8 space-y-4">
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tighter !leading-tight text-left">
-            Easiest way to start
-            <br /> Next.js project
-            <br /> with Cursor
-          </h1>
-
-          <p className="text-lg text-muted-foreground">
-            Get Pro-created Next.js bootstrap just in seconds
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
+      <Card className="w-full max-w-2xl shadow-xl">
+        <CardHeader className="text-center space-y-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
+          <CardTitle className="text-3xl font-bold">ERP 단어 연습장</CardTitle>
+          <p className="text-blue-100">
+            약어를 보고 영문 풀네임과 한글 설명을 입력하세요
           </p>
+        </CardHeader>
 
-          <div className="flex items-center gap-2">
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="gap-2 w-fit rounded-full px-4 py-2 border border-black"
-            >
-              <a href="https://github.com/easynextjs/easynext" target="_blank">
-                <Github className="w-4 h-4" />
-                GitHub
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="secondary"
-              className="gap-2 w-fit rounded-full px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white"
-            >
-              <a href="https://easynext.org/premium" target="_blank">
-                <Sparkles className="w-4 h-4" />
-                Premium
-              </a>
-            </Button>
-          </div>
-          <Section />
-        </div>
-      </div>
-
-      <div className="min-h-screen ml-16 flex-1 flex flex-col items-center justify-center space-y-4">
-        <div className="flex flex-col items-center space-y-2">
-          <p className="text-muted-foreground">
-            Current Version: {CURRENT_VERSION}
-          </p>
-          <p className="text-muted-foreground">
-            Latest Version:{' '}
-            <span className="font-bold">{latest || 'Loading...'}</span>
-          </p>
-        </div>
-
-        {needsUpdate && (
-          <div className="flex flex-col items-center space-y-2">
-            <p className="text-yellow-600">New version available!</p>
-            <p className="text-sm text-muted-foreground">
-              Copy and run the command below to update:
-            </p>
-            <div className="relative group">
-              <pre className="bg-gray-100 p-4 rounded-lg">
-                npm install -g {PACKAGE_NAME}@latest
-              </pre>
-              <button
-                onClick={handleCopyCommand}
-                className="absolute top-2 right-2 p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <Copy className="w-4 h-4" />
-              </button>
+        <CardContent className="space-y-8 p-8">
+          <div className="text-center space-y-2">
+            <p className="text-sm text-muted-foreground font-medium">문제</p>
+            <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-8 shadow-lg">
+              <p className="text-6xl font-bold tracking-wider">
+                {currentItem.abbr}
+              </p>
             </div>
           </div>
-        )}
-      </div>
+
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="fullname" className="text-base font-semibold">
+                영문 풀네임
+              </Label>
+              <Input
+                id="fullname"
+                type="text"
+                placeholder="예: Enterprise Resource Planning"
+                value={userAnswer.fullname}
+                onChange={(e) =>
+                  setUserAnswer({ ...userAnswer, fullname: e.target.value })
+                }
+                disabled={submitted}
+                className="text-lg p-6"
+              />
+              {submitted && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    {result?.fullnameCorrect ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-600" />
+                    )}
+                    <span
+                      className={
+                        result?.fullnameCorrect
+                          ? "text-green-600 font-semibold"
+                          : "text-red-600 font-semibold"
+                      }
+                    >
+                      {result?.fullnameCorrect ? "정답입니다!" : "오답입니다"}
+                    </span>
+                  </div>
+                  {!result?.fullnameCorrect && (
+                    <p className="text-sm text-muted-foreground bg-blue-50 p-3 rounded-lg">
+                      정답:{" "}
+                      <span className="font-semibold text-blue-700">
+                        {currentItem.fullname}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description" className="text-base font-semibold">
+                한글 설명
+              </Label>
+              <Input
+                id="description"
+                type="text"
+                placeholder="예: 기업의 자원을 통합 관리하는 시스템"
+                value={userAnswer.description}
+                onChange={(e) =>
+                  setUserAnswer({ ...userAnswer, description: e.target.value })
+                }
+                disabled={submitted}
+                className="text-lg p-6"
+              />
+              {submitted && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    {result?.descriptionCorrect ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-600" />
+                    )}
+                    <span
+                      className={
+                        result?.descriptionCorrect
+                          ? "text-green-600 font-semibold"
+                          : "text-red-600 font-semibold"
+                      }
+                    >
+                      {result?.descriptionCorrect
+                        ? "정답입니다!"
+                        : "오답입니다"}
+                    </span>
+                  </div>
+                  {!result?.descriptionCorrect && (
+                    <p className="text-sm text-muted-foreground bg-blue-50 p-3 rounded-lg">
+                      정답:{" "}
+                      <span className="font-semibold text-blue-700">
+                        {currentItem.description}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            {!submitted ? (
+              <Button
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                className="w-full text-lg py-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                size="lg"
+              >
+                제출하기
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                className="w-full text-lg py-6 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
+                size="lg"
+              >
+                다음 문제
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  );
-}
-
-function Section() {
-  const items = [
-    { href: 'https://nextjs.org/', label: 'Next.js' },
-    { href: 'https://ui.shadcn.com/', label: 'shadcn/ui' },
-    { href: 'https://tailwindcss.com/', label: 'Tailwind CSS' },
-    { href: 'https://www.framer.com/motion/', label: 'framer-motion' },
-    { href: 'https://zod.dev/', label: 'zod' },
-    { href: 'https://date-fns.org/', label: 'date-fns' },
-    { href: 'https://ts-pattern.dev/', label: 'ts-pattern' },
-    { href: 'https://es-toolkit.dev/', label: 'es-toolkit' },
-    { href: 'https://zustand.docs.pmnd.rs/', label: 'zustand' },
-    { href: 'https://supabase.com/', label: 'supabase' },
-    { href: 'https://react-hook-form.com/', label: 'react-hook-form' },
-  ];
-
-  return (
-    <div className="flex flex-col py-5 md:py-8 space-y-2 opacity-75">
-      <p className="font-semibold">What&apos;s Included</p>
-
-      <div className="flex flex-col space-y-1 text-muted-foreground">
-        {items.map((item) => (
-          <SectionItem key={item.href} href={item.href}>
-            {item.label}
-          </SectionItem>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SectionItem({
-  children,
-  href,
-}: {
-  children: React.ReactNode;
-  href: string;
-}) {
-  return (
-    <a
-      href={href}
-      className="flex items-center gap-2 underline"
-      target="_blank"
-    >
-      <CheckCircle className="w-4 h-4" />
-      <p>{children}</p>
-    </a>
   );
 }
