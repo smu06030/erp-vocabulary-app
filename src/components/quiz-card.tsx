@@ -41,12 +41,20 @@ export function QuizCard({
   } | null>(null);
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const fullnameInputRef = useRef<HTMLInputElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const retryButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setUserAnswer({ fullname: "", description: "" });
     setSubmitted(false);
     setResult(null);
     scrollToTop();
+
+    setTimeout(() => {
+      fullnameInputRef.current?.focus();
+    }, 100);
   }, [item]);
 
   const scrollToTop = () => {
@@ -65,6 +73,10 @@ export function QuizCard({
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
+
+    setTimeout(() => {
+      nextButtonRef.current?.focus();
+    }, 100);
   };
 
   const handleRetry = () => {
@@ -72,6 +84,10 @@ export function QuizCard({
     setSubmitted(false);
     setResult(null);
     scrollToTop();
+
+    setTimeout(() => {
+      fullnameInputRef.current?.focus();
+    }, 100);
   };
 
   const handleNext = () => {
@@ -84,6 +100,13 @@ export function QuizCard({
 
   const isFormValid =
     userAnswer.fullname.trim() && userAnswer.description.trim();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && isFormValid && !submitted) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
 
   return (
     <Card ref={cardRef} className="w-full max-w-2xl shadow-xl">
@@ -122,6 +145,7 @@ export function QuizCard({
               영문 풀네임
             </Label>
             <Input
+              ref={fullnameInputRef}
               id="fullname"
               type="text"
               placeholder="예: Enterprise Resource Planning"
@@ -129,6 +153,7 @@ export function QuizCard({
               onChange={(e) =>
                 setUserAnswer({ ...userAnswer, fullname: e.target.value })
               }
+              onKeyDown={handleKeyDown}
               disabled={submitted}
               className="text-base sm:text-lg p-4 sm:p-5 md:p-6 min-h-[48px]"
             />
@@ -177,6 +202,7 @@ export function QuizCard({
               onChange={(e) =>
                 setUserAnswer({ ...userAnswer, description: e.target.value })
               }
+              onKeyDown={handleKeyDown}
               disabled={submitted}
               className="text-base sm:text-lg p-4 sm:p-5 md:p-6 min-h-[48px]"
             />
@@ -214,6 +240,7 @@ export function QuizCard({
         <div className="pt-2">
           {!submitted ? (
             <Button
+              ref={submitButtonRef}
               onClick={handleSubmit}
               disabled={!isFormValid}
               className="w-full text-base sm:text-lg py-5 sm:py-6 min-h-[52px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-semibold"
@@ -225,6 +252,7 @@ export function QuizCard({
             <div className="flex flex-col sm:flex-row gap-3 w-full">
               {mode === "random" && (
                 <Button
+                  ref={retryButtonRef}
                   onClick={handleRetry}
                   variant="outline"
                   className="w-full sm:flex-1 text-base sm:text-lg py-5 sm:py-6 min-h-[52px] border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-semibold"
@@ -235,6 +263,7 @@ export function QuizCard({
                 </Button>
               )}
               <Button
+                ref={nextButtonRef}
                 onClick={handleNext}
                 className={`w-full ${
                   mode === "random" ? "sm:flex-1" : ""
