@@ -143,7 +143,7 @@
     "fullname": "Foreign Key",
     "description": "다른 테이블 참조키, 참조 무결성 보장"
   },
-  { "id": 25, "abbr": "IDK", "fullname": "Index", "description": "인덱스" },
+  { "id": 25, "abbr": "IDX", "fullname": "Index", "description": "인덱스" },
   {
     "id": 26,
     "abbr": "API",

@@ -23,9 +23,7 @@ export default function SelectedQuizPage() {
           <h1 className="text-2xl font-bold text-red-600">
             용어를 찾을 수 없습니다
           </h1>
-          <p className="text-muted-foreground">
-            존재하지 않는 용어 ID입니다.
-          </p>
+          <p className="text-muted-foreground">존재하지 않는 용어 ID입니다.</p>
           <Link href="/list">
             <Button>목록으로 돌아가기</Button>
           </Link>
@@ -49,13 +47,8 @@ export default function SelectedQuizPage() {
             </Button>
           </Link>
         </div>
-        <QuizCard
-          item={item}
-          mode="selected"
-          onBackToList={handleBackToList}
-        />
+        <QuizCard item={item} mode="selected" onBackToList={handleBackToList} />
       </div>
     </div>
   );
 }
-

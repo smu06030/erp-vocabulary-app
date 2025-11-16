@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2, XCircle, ArrowRight, List } from "lucide-react";
+import {
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  List,
+  RotateCcw,
+} from "lucide-react";
 import { VocabularyItem, QuizAnswer } from "@/types/vocabulary";
 import { checkAnswer } from "@/lib/quiz";
 
@@ -26,19 +32,44 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
     fullnameCorrect: boolean;
     descriptionCorrect: boolean;
   } | null>(null);
+  
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setUserAnswer({ fullname: "", description: "" });
+    setSubmitted(false);
+    setResult(null);
+    scrollToTop();
+  }, [item]);
+
+  const scrollToTop = () => {
+    if (cardRef.current) {
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const handleSubmit = () => {
     const quizResult = checkAnswer(userAnswer, item);
     setResult(quizResult);
     setSubmitted(true);
+    
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const handleRetry = () => {
+    setUserAnswer({ fullname: "", description: "" });
+    setSubmitted(false);
+    setResult(null);
+    scrollToTop();
   };
 
   const handleNext = () => {
     if (mode === "random" && onNext) {
       onNext();
-      setUserAnswer({ fullname: "", description: "" });
-      setSubmitted(false);
-      setResult(null);
     } else if (mode === "selected" && onBackToList) {
       onBackToList();
     }
@@ -48,25 +79,34 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
     userAnswer.fullname.trim() && userAnswer.description.trim();
 
   return (
-    <Card className="w-full max-w-2xl shadow-xl">
-      <CardHeader className="text-center space-y-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-        <CardTitle className="text-3xl font-bold">ERP 단어 연습장</CardTitle>
-        <p className="text-blue-100">
+    <Card ref={cardRef} className="w-full max-w-2xl shadow-xl">
+      <CardHeader className="text-center space-y-2 sm:space-y-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg py-6 sm:py-8 px-4">
+        <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          ERP 단어 연습장
+        </CardTitle>
+        <p className="text-sm sm:text-base text-blue-100">
           약어를 보고 영문 풀네임과 한글 설명을 입력하세요
         </p>
       </CardHeader>
 
-      <CardContent className="space-y-8 p-8">
-        <div className="text-center space-y-2">
-          <p className="text-sm text-muted-foreground font-medium">문제</p>
-          <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-8 shadow-lg">
-            <p className="text-6xl font-bold tracking-wider">{item.abbr}</p>
+      <CardContent className="space-y-6 sm:space-y-8 p-4 sm:p-6 md:p-8">
+        <div className="text-center space-y-3">
+          <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+            문제
+          </p>
+          <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-6 sm:p-8 md:p-10 shadow-lg">
+            <p className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-wider break-all">
+              {item.abbr}
+            </p>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="fullname" className="text-base font-semibold">
+        <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-3">
+            <Label
+              htmlFor="fullname"
+              className="text-base sm:text-lg font-semibold"
+            >
               영문 풀네임
             </Label>
             <Input
@@ -78,28 +118,28 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
                 setUserAnswer({ ...userAnswer, fullname: e.target.value })
               }
               disabled={submitted}
-              className="text-lg p-6"
+              className="text-base sm:text-lg p-4 sm:p-5 md:p-6 min-h-[48px]"
             />
             {submitted && (
-              <div className="space-y-2">
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-center gap-2">
                   {result?.fullnameCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-red-600" />
+                    <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
                   )}
                   <span
-                    className={
+                    className={`text-sm sm:text-base font-semibold ${
                       result?.fullnameCorrect
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 font-semibold"
-                    }
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
                   >
                     {result?.fullnameCorrect ? "정답입니다!" : "오답입니다"}
                   </span>
                 </div>
                 {!result?.fullnameCorrect && (
-                  <p className="text-sm text-muted-foreground bg-blue-50 p-3 rounded-lg">
+                  <p className="text-sm sm:text-base text-muted-foreground bg-blue-50 p-3 sm:p-4 rounded-lg break-words">
                     정답:{" "}
                     <span className="font-semibold text-blue-700">
                       {item.fullname}
@@ -110,8 +150,11 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description" className="text-base font-semibold">
+          <div className="space-y-2 sm:space-y-3">
+            <Label
+              htmlFor="description"
+              className="text-base sm:text-lg font-semibold"
+            >
               한글 설명
             </Label>
             <Input
@@ -123,28 +166,28 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
                 setUserAnswer({ ...userAnswer, description: e.target.value })
               }
               disabled={submitted}
-              className="text-lg p-6"
+              className="text-base sm:text-lg p-4 sm:p-5 md:p-6 min-h-[48px]"
             />
             {submitted && (
-              <div className="space-y-2">
+              <div className="space-y-2 sm:space-y-3">
                 <div className="flex items-center gap-2">
                   {result?.descriptionCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-red-600" />
+                    <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
                   )}
                   <span
-                    className={
+                    className={`text-sm sm:text-base font-semibold ${
                       result?.descriptionCorrect
-                        ? "text-green-600 font-semibold"
-                        : "text-red-600 font-semibold"
-                    }
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
                   >
                     {result?.descriptionCorrect ? "정답입니다!" : "오답입니다"}
                   </span>
                 </div>
                 {!result?.descriptionCorrect && (
-                  <p className="text-sm text-muted-foreground bg-blue-50 p-3 rounded-lg">
+                  <p className="text-sm sm:text-base text-muted-foreground bg-blue-50 p-3 sm:p-4 rounded-lg break-words">
                     정답:{" "}
                     <span className="font-semibold text-blue-700">
                       {item.description}
@@ -156,38 +199,52 @@ export function QuizCard({ item, mode, onNext, onBackToList }: QuizCardProps) {
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="pt-2">
           {!submitted ? (
             <Button
               onClick={handleSubmit}
               disabled={!isFormValid}
-              className="w-full text-lg py-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="w-full text-base sm:text-lg py-5 sm:py-6 min-h-[52px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 font-semibold"
               size="lg"
             >
               제출하기
             </Button>
           ) : (
-            <Button
-              onClick={handleNext}
-              className="w-full text-lg py-6 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
-              size="lg"
-            >
-              {mode === "random" ? (
-                <>
-                  다음 문제
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </>
-              ) : (
-                <>
-                  <List className="w-5 h-5 mr-2" />
-                  목록으로 돌아가기
-                </>
+            <div className="flex flex-col sm:flex-row gap-3 w-full">
+              {mode === "random" && (
+                <Button
+                  onClick={handleRetry}
+                  variant="outline"
+                  className="w-full sm:flex-1 text-base sm:text-lg py-5 sm:py-6 min-h-[52px] border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-semibold"
+                  size="lg"
+                >
+                  재도전
+                  <RotateCcw className="w-5 h-5 ml-2" />
+                </Button>
               )}
-            </Button>
+              <Button
+                onClick={handleNext}
+                className={`w-full ${
+                  mode === "random" ? "sm:flex-1" : ""
+                } text-base sm:text-lg py-5 sm:py-6 min-h-[52px] bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 font-semibold`}
+                size="lg"
+              >
+                {mode === "random" ? (
+                  <>
+                    다음 문제
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </>
+                ) : (
+                  <>
+                    <List className="w-5 h-5 mr-2" />
+                    목록으로 돌아가기
+                  </>
+                )}
+              </Button>
+            </div>
           )}
         </div>
       </CardContent>
     </Card>
   );
 }
-
